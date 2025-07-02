@@ -3,42 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <title>Ethereum ↔ Kusama Address Converter</title>
-  <script src="https://unpkg.com/@polkadot/util-crypto@latest/bundle/polkadot-util-crypto.min.js"></script>
-  <script src="https://unpkg.com/@polkadot/util@latest/bundle/polkadot-util.min.js"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <!-- Polkadot.js libs -->
+  <script src="https://unpkg.com/@polkadot/util@11.7.1/bundle/polkadot-util.umd.js"></script>
+  <script src="https://unpkg.com/@polkadot/util-crypto@11.7.1/bundle/polkadot-util-crypto.umd.js"></script>
+  <script>
+    const polkadotUtil = window.polkadotUtil;
+    const polkadotUtilCrypto = window.polkadotUtilCrypto;
+  </script>
+
   <style>
+    :root {
+      --pink: #ff0066;
+      --black: #000000;
+      --gray: #1a1a1a;
+      --white: #ffffff;
+    }
+
     body {
-      font-family: sans-serif;
-      background: #f8f9fa;
+      font-family: 'Share Tech Mono', monospace;
+      background-color: var(--black);
+      color: var(--white);
       padding: 2rem;
-      max-width: 600px;
+      max-width: 700px;
       margin: auto;
     }
+
     h1 {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
+      color: var(--pink);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 2px solid var(--pink);
+      padding-bottom: 0.5rem;
+      margin-bottom: 2rem;
     }
-    label, input, button {
-      display: block;
-      margin-bottom: 1rem;
+
+    label {
+      color: var(--pink);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
     }
+
     input {
       width: 100%;
-      padding: 0.5rem;
-      font-family: monospace;
+      padding: 0.75rem;
+      background-color: var(--gray);
+      color: var(--white);
+      border: 1px solid var(--pink);
+      border-radius: 4px;
+      font-family: 'Share Tech Mono', monospace;
+      margin-bottom: 1rem;
     }
+
     button {
+      background-color: transparent;
+      border: 1px solid var(--pink);
+      color: var(--pink);
       padding: 0.5rem 1rem;
+      font-size: 1rem;
+      text-transform: uppercase;
       cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
     }
+
+    button:hover {
+      background-color: var(--pink);
+      color: var(--black);
+    }
+
     .output {
-      background: #e9ecef;
+      background-color: var(--gray);
       padding: 1rem;
-      border-radius: 5px;
+      border-left: 4px solid var(--pink);
+      border-radius: 4px;
+      font-size: 0.95rem;
       word-break: break-all;
       margin-top: 0.5rem;
+      margin-bottom: 2rem;
     }
+
     .error {
-      color: red;
+      color: #ff3333;
       font-weight: bold;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--pink);
+      margin: 2rem 0;
     }
   </style>
 </head>
@@ -46,20 +103,23 @@
   <h1>Ethereum ↔ Kusama Address Converter</h1>
 
   <!-- Ethereum → Kusama -->
-  <label for="ethAddress">Ethereum Address (0x...):</label>
-  <input type="text" id="ethAddress" placeholder="0x1234..." />
+  <label for="ethAddress">Ethereum Address</label>
+  <input type="text" id="ethAddress" placeholder="0x..." />
   <button onclick="convertToKusama()">Convert to Kusama</button>
   <div id="result" class="output">–</div>
 
   <hr />
 
   <!-- Kusama → Ethereum -->
-  <label for="ksmAddress">Kusama Address:</label>
-  <input type="text" id="ksmAddress" placeholder="e.g., HsWJk..." />
+  <label for="ksmAddress">Kusama Address</label>
+  <input type="text" id="ksmAddress" placeholder="e.g. HsWJk..." />
   <button onclick="decodeFromKusama()">Decode to Ethereum</button>
   <div id="decoded" class="output">–</div>
 
   <script>
+    const polkadotUtil = window.polkadotUtil;
+    const polkadotUtilCrypto = window.polkadotUtilCrypto;
+
     function isValidEthereumAddress(address) {
       return /^0x[a-fA-F0-9]{40}$/.test(address);
     }
