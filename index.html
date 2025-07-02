@@ -1,55 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<!doctype html>
+<html lang="en" class="h-100">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Kusama → Ethereum</title>
-  <script src="https://shawntabrizi.com/substrate-js-utilities/polkadot-util.min.js"></script>
-  <script src="https://shawntabrizi.com/substrate-js-utilities/polkadot-util-crypto.min.js"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Simple Utilities for Substrate">
+	<meta name="author" content="Shawn Tabrizi">
+	<title>Ethereum - Kusama Converter</title>
+
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<!-- Custom styles for this template -->
+	<link href="custom.css" rel="stylesheet">
 </head>
-<body>
-  <h2>Kusama → Ethereum Converter</h2>
 
-  <input id="ksmAddress" placeholder="Enter Kusama address" />
-  <button id="convert">Convert</button>
-  <pre id="output">–</pre>
+<body class="d-flex flex-column h-100">
+	<main role="main" class="flex-shrink-0">
+		<div class="container">
+			<h1 class="mt-5">Ethereum - Kusama Converter</h1>
+			<div class="row">
+				<div class="col">
+					<div class="mb-3">
+						<h4>Ethereum to Substrate Address</h4>
+						<div class="input-group">
+							<input type="text" class="form-control" id="eth-e2s" placeholder="Ethereum">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="addon-wrapping">&#8644;</span>
+							</div>
+							<input type="text" class="form-control" id="sub-e2s" placeholder="Kusama">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
 
-  <script>
-    window.addEventListener("load", () => {
-      const polkadotUtil = window.polkadotUtil;
-      const polkadotUtilCrypto = window.polkadotUtilCrypto;
+	<footer class="footer mt-auto py-3">
+		<div class="container">
+			<span class="text-muted">
+				Substrate JS Utilities
+				- Created by <a href="https://shawntabrizi.com">Shawn Tabrizi</a>
+				- Source on <a href="https://github.com/shawntabrizi/substrate-js-utilities">GitHub</a>
+				- Using <a href="https://polkadot.js.org/common/">polkadot-js/common</a>
+			</span>
+		</div>
+	</footer>
+	<script src="https://unpkg.com/@polkadot/util/bundle-polkadot-util.js"></script>
+	<script src="https://unpkg.com/@polkadot/util-crypto/bundle-polkadot-util-crypto.js"></script>
+	<script src="https://unpkg.com/@polkadot/keyring/bundle-polkadot-keyring.js"></script>
 
-      if (!polkadotUtil || !polkadotUtilCrypto) {
-        document.getElementById("output").textContent = "❌ Libraries failed to load.";
-        return;
-      }
-
-      function isValidEthHex(hex) {
-        return /^0x[a-fA-F0-9]{40}$/.test(hex);
-      }
-
-      document.getElementById("convert").addEventListener("click", () => {
-        const input = document.getElementById("ksmAddress").value.trim();
-        const output = document.getElementById("output");
-
-        try {
-          const [u8a, prefix] = polkadotUtilCrypto.decodeAddress(input, true);
-          if (prefix !== 2) {
-            output.textContent = "❌ Not a Kusama address (prefix is " + prefix + ")";
-            return;
-          }
-
-          const ethHex = polkadotUtil.u8aToHex(u8a);
-          if (!isValidEthHex(ethHex)) {
-            output.textContent = "⚠️ Decoded value is not a valid Ethereum address.";
-            return;
-          }
-
-          output.textContent = "✅ Ethereum address: " + ethHex;
-        } catch (err) {
-          output.textContent = "❌ Error: " + err.message;
-        }
-      });
-    });
-  </script>
+	<script src="utilities.js"></script>
 </body>
+
 </html>
