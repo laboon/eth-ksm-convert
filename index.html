@@ -2,6 +2,90 @@
 <!doctype html>
 <html lang="en" class="h-100">
 
+  <head>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+      :root {
+	  --pink: #ff0066;
+	  --black: #000;
+	  --gray-dark: #111;
+	  --white: #f5f5f5;
+      }
+      body {
+	  font-family: 'Share Tech Mono', monospace;
+	  color: var(--white);
+	  background: var(--black);
+	  margin:0;padding:2rem;
+	  display:flex;
+	  align-items:center;
+	  justify-content:center;
+	  min-height:100vh;
+      }
+      .container {
+	  max-width:600px;
+	  width:100%;
+	  text-align:center;
+      }
+      h1 {
+	  font-size:2.5rem;
+	  color:var(--pink);
+	  text-transform:uppercase;
+	  letter-spacing:2px;
+	  margin-bottom:1.5rem;
+	  position:relative;
+	  line-height:1.1;
+      }
+      h1::after {
+	  content: attr(data-text);
+	  position:absolute;
+	  left:0;top:0;
+	  width:100%;height:100%;
+	  color:var(--white);
+	  clip-path: polygon(0 2%,100% 3%,100% 15%,0 14%);
+	  opacity:0.3;
+	  animation: glitch1 2s infinite linear alternate-reverse;
+      }
+      @keyframes glitch1 {
+	  0% { transform: translate(0px,0px); }
+	  50% { transform: translate(2px,-2px); }
+	  100% { transform: translate(-2px,2px); }
+      }
+      input, button {
+	  font-family:inherit;
+	  padding:0.75rem;
+	  margin:0.5rem 0;
+	  width:100%;
+	  border:2px solid var(--pink);
+	  background:var(--gray-dark);
+	  color:var(--white);
+	  text-transform:uppercase;
+	  letter-spacing:1px;
+      }
+      button:hover {
+	  background: var(--pink);
+	  color: var(--black);
+      }
+      pre#output {
+	  background: var(--gray-dark);
+	  padding:1rem;
+	  margin-top:1rem;
+	  border-left:4px solid var(--pink);
+	  color:var(--white);
+      }
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Ethereum - Kusama Address Converter ">
+    <meta name="author" content="Bill Laboon">
+    <title>Ethereum - Kusama Converter</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="custom.css" rel="stylesheet">
+
+  </head>
+
+ <!---
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,12 +93,11 @@
 	<meta name="author" content="Shawn Tabrizi">
 	<title>Ethereum - Kusama Converter</title>
 
-	<!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<!-- Custom styles for this template -->
 	<link href="custom.css" rel="stylesheet">
 </head>
+-->
 
 <body class="d-flex flex-column h-100">
 	<main role="main" class="flex-shrink-0">
