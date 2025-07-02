@@ -5,28 +5,17 @@
   <title>Ethereum ↔ Kusama Address Converter</title>
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
 
   <!-- Polkadot.js libs -->
   <script src="https://unpkg.com/@polkadot/util@11.7.1/bundle/polkadot-util.umd.js"></script>
   <script src="https://unpkg.com/@polkadot/util-crypto@11.7.1/bundle/polkadot-util-crypto.umd.js"></script>
-  <script>
-  const polkadotUtil = window.polkadotUtil;
-  const polkadotUtilCrypto = window.polkadotUtilCrypto;
-</script>
 
   <style>
-    :root {
-      --pink: #ff0066;
-      --black: #000000;
-      --gray: #1a1a1a;
-      --white: #ffffff;
-    }
-
     body {
       font-family: 'Share Tech Mono', monospace;
-      background-color: var(--black);
-      color: var(--white);
+      background-color: black;
+      color: white;
       padding: 2rem;
       max-width: 700px;
       margin: auto;
@@ -34,17 +23,14 @@
 
     h1 {
       font-size: 1.8rem;
-      color: var(--pink);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      border-bottom: 2px solid var(--pink);
+      color: #ff0066;
+      border-bottom: 2px solid #ff0066;
       padding-bottom: 0.5rem;
       margin-bottom: 2rem;
     }
 
     label {
-      color: var(--pink);
-      font-size: 0.9rem;
+      color: #ff0066;
       text-transform: uppercase;
       margin-bottom: 0.25rem;
     }
@@ -52,39 +38,36 @@
     input {
       width: 100%;
       padding: 0.75rem;
-      background-color: var(--gray);
-      color: var(--white);
-      border: 1px solid var(--pink);
+      background-color: #1a1a1a;
+      color: white;
+      border: 1px solid #ff0066;
       border-radius: 4px;
-      font-family: 'Share Tech Mono', monospace;
+      font-family: inherit;
       margin-bottom: 1rem;
     }
 
     button {
-      background-color: transparent;
-      border: 1px solid var(--pink);
-      color: var(--pink);
+      background: transparent;
+      border: 1px solid #ff0066;
+      color: #ff0066;
       padding: 0.5rem 1rem;
-      font-size: 1rem;
-      text-transform: uppercase;
       cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
+      text-transform: uppercase;
+      transition: background 0.3s, color 0.3s;
     }
 
     button:hover {
-      background-color: var(--pink);
-      color: var(--black);
+      background: #ff0066;
+      color: black;
     }
 
     .output {
-      background-color: var(--gray);
+      background-color: #1a1a1a;
       padding: 1rem;
-      border-left: 4px solid var(--pink);
+      border-left: 4px solid #ff0066;
       border-radius: 4px;
-      font-size: 0.95rem;
-      word-break: break-all;
       margin-top: 0.5rem;
-      margin-bottom: 2rem;
+      word-break: break-all;
     }
 
     .error {
@@ -93,9 +76,9 @@
     }
 
     hr {
-      border: none;
-      border-top: 1px solid var(--pink);
       margin: 2rem 0;
+      border: none;
+      border-top: 1px solid #ff0066;
     }
   </style>
 </head>
@@ -116,6 +99,7 @@
   <button onclick="decodeFromKusama()">Decode to Ethereum</button>
   <div id="decoded" class="output">–</div>
 
+  <!-- Main Script (must come last!) -->
   <script>
     const polkadotUtil = window.polkadotUtil;
     const polkadotUtilCrypto = window.polkadotUtilCrypto;
@@ -147,8 +131,7 @@
       const decodedEl = document.getElementById('decoded');
 
       try {
-        const u8a = polkadotUtilCrypto.decodeAddress(ksmAddress);
-        const prefix = polkadotUtilCrypto.decodeAddress(ksmAddress, true)[1];
+        const [u8a, prefix] = polkadotUtilCrypto.decodeAddress(ksmAddress, true);
         if (prefix !== 2) {
           decodedEl.innerHTML = "<span class='error'>❌ Not a Kusama address (expected SS58 prefix 2).</span>";
           return;
